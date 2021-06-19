@@ -2,6 +2,7 @@ import WebSocket from 'ws';
 import { API_KEY, API_SECRET } from './credentials.js';
 import { createHmac } from 'crypto';
 import winston from 'winston';
+import { SERVER_ADDRESS } from './properties.js';
 
 const logger = winston.createLogger({
   level: 'info',
@@ -24,7 +25,7 @@ const authHeader = (apiKey, apiSecret, date) => {
 };
 
 const connect = () => {
-  var ws = new WebSocket('ws://localhost:8080', {
+  var ws = new WebSocket(`ws://${SERVER_ADDRESS}`, {
     headers: {
       date: date,
       apiKey: API_KEY,
