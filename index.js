@@ -58,7 +58,6 @@ const connect = () => {
 
   ws.onerror = function(err) {
     console.error('Socket encountered error: ', err.message, 'Closing socket');
-    logger.log('info', `Socket encountered an error: ${err.message}`);
     ws.close();
   };
 };
