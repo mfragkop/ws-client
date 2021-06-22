@@ -34,7 +34,8 @@ const connect = () => {
   });
   let pingInterval;
   ws.on('open', function open() {
-    console.log('Opened socket')
+    console.log('Opened socket');
+    logger.log('info', 'Connected');
     pingInterval = setInterval(() => {
       ws.send('{ "type": "ping" }');
       logger.log('info','Ping sent');
@@ -48,6 +49,7 @@ const connect = () => {
 
   ws.onclose = function(e) {
     console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+    logger.log('info', 'Connection closed, trying to reconnect');
     clearInterval(pingInterval);
     setTimeout(function() {
       connect();
@@ -56,6 +58,7 @@ const connect = () => {
 
   ws.onerror = function(err) {
     console.error('Socket encountered error: ', err.message, 'Closing socket');
+    logger.log('info', `Socket encountered an error: ${err.message}`);
     ws.close();
   };
 };
